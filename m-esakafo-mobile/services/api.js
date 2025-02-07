@@ -3,7 +3,7 @@ import superagent from 'superagent';
 
 const API_URL = 'https://m-esakafo-1.onrender.com';
 
-// Configuration de base d'axios
+// Configuration axios
 const api = axios.create({
     baseURL: API_URL,
     timeout: 10000, // Délai d'attente de 10 secondes
