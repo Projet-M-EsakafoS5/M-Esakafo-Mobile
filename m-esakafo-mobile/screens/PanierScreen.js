@@ -46,16 +46,15 @@ const PanierScreen = ({ route }) => {
         }
       }
 
-      // Si toutes les commandes ont été passées avec succès
       Alert.alert('Succès', `Votre commande a été enregistrée avec le numéro de ticket : ${numeroTicket}`);
-      setPanier([]); // Vider le panier après la commande
-      navigation.goBack(); // Retourner à l'écran précédent
+      setPanier([]); 
+      navigation.goBack(); 
 
     } catch (error) {
       Alert.alert('Erreur', 'Une erreur est survenue lors de la création de la commande');
       console.error(error);
     } finally {
-      setLoading(false); // Arrêter le chargement une fois l'API terminée
+      setLoading(false); 
     }
   };
 

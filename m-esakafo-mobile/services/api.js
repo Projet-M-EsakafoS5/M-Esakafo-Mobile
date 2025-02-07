@@ -105,7 +105,7 @@ export const createCommande = async (userId, plats, numeroTicket, quantite) => {
                 numeroTicket: numeroTicket
             };
 
-            console.log('Envoi de la commande:', commandeData);
+            console.log('Envoi de la commande au serveur:', commandeData);
 
             return api.post('/api/commandes', commandeData, {
                 headers: {
