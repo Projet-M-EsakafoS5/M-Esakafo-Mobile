@@ -30,7 +30,7 @@ const PanierScreen = ({ route }) => {
         return;
       }
 
-      // Générer un ticket pour la commande
+      // Générer un ticket pour la commande random
       const numeroTicket = `T-${Math.floor(Math.random() * 1000)}`;  // Exemple de génération de ticket
 
       // Passer chaque plat un par un dans le panier
