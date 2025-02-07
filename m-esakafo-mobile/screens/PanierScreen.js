@@ -32,7 +32,7 @@ const PanierScreen = ({ route }) => {
 
       // Générer un ticket pour la commande random
       const numeroTicket = `T-${Math.floor(Math.random() * 1000)}`;  
-
+      // Boucle pour plats si plusieurs plats dans une commande
       for (let plat of panier) {
         const quantite = plat.quantite; 
 
