@@ -16,7 +16,7 @@ const LoginScreen = ({ navigation }) => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       console.log('Logged in with:', user.email);
-      // Navigation vers la page principale après connexion réussie
+      // Navigation vers Home Screen principale après connexion réussie
       navigation.replace('Home');
     } catch (error) {
       setError('Email ou mot de passe incorrect');
