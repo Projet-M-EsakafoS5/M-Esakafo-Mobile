@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { getAuth } from 'firebase/auth';  // Importer pour récupérer l'utilisateur connecté
-import { createCommande } from '../services/api'; // Importer la fonction createCommande
+import { getAuth } from 'firebase/auth';  
+import { createCommande } from '../services/api'; 
 
 const PanierScreen = ({ route }) => {
   const navigation = useNavigation();
