@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import React, { useState } from 'react'; 
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, KeyboardAvoidingView, ImageBackground } from 'react-native';
 import { auth } from '../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
@@ -12,7 +12,6 @@ const RegisterScreen = ({ navigation }) => {
 
   const handleRegister = async () => {
     if (password !== confirmPassword) {
-      //Si erreur envoyer un code erreur
       setError('Les mots de passe ne correspondent pas');
       return;
     }
@@ -21,7 +20,6 @@ const RegisterScreen = ({ navigation }) => {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       console.log('Registered with:', user.email);
-      // Navigation vers la page de connexion si inscription réussie
       navigation.replace('Login');
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
@@ -36,67 +34,66 @@ const RegisterScreen = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <View style={styles.inputContainer}>
-        <Text style={styles.title}>Inscription</Text>
-        
-        <TextInput
-          placeholder="Email"
-          value={email}
-          onChangeText={text => setEmail(text)}
-          style={styles.input}
-          autoCapitalize="none"
-        />
-        <TextInput
-          placeholder="Mot de passe"
-          value={password}
-          onChangeText={text => setPassword(text)}
-          style={styles.input}
-          secureTextEntry
-        />
-        <TextInput
-          placeholder="Confirmer le mot de passe"
-          value={confirmPassword}
-          onChangeText={text => setConfirmPassword(text)}
-          style={styles.input}
-          secureTextEntry
-        />
-        {error ? <Text style={styles.errorText}>{error}</Text> : null}
-      </View>
+    <ImageBackground source={require('../img/sign-in.jpg')} style={styles.background}>
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
+        <View style={styles.inputContainer}>          
+          <TextInput
+            placeholder="Email"
+            value={email}
+            onChangeText={text => setEmail(text)}
+            style={styles.input}
+            autoCapitalize="none"
+          />
+          <TextInput
+            placeholder="Mot de passe"
+            value={password}
+            onChangeText={text => setPassword(text)}
+            style={styles.input}
+            secureTextEntry
+          />
+          <TextInput
+            placeholder="Confirmer le mot de passe"
+            value={confirmPassword}
+            onChangeText={text => setConfirmPassword(text)}
+            style={styles.input}
+            secureTextEntry
+          />
+          {error ? <Text style={styles.errorText}>{error}</Text> : null}
+        </View>
 
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={handleRegister}
-          style={styles.button}
-        >
-          <Text style={styles.buttonText}>S'inscrire</Text>
-        </TouchableOpacity>
-        
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Login')}
-          style={[styles.button, styles.buttonOutline]}
-        >
-          <Text style={styles.buttonOutlineText}>Retour à la connexion</Text>
-        </TouchableOpacity>
-      </View>
-    </KeyboardAvoidingView>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity onPress={handleRegister} style={styles.button}>
+            <Text style={styles.buttonText}>S'inscrire</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity onPress={() => navigation.navigate('Login')} style={[styles.button, styles.buttonOutline]}>
+            <Text style={styles.buttonOutlineText}>Retour à la connexion</Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
+    </ImageBackground>
   );
 };
 
 export default RegisterScreen;
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+  },
   container: {
     flex: 1,
+    marginTop: 120,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-    color: '#333',
+    color: '#fff',
   },
   inputContainer: {
     width: '80%',
@@ -117,7 +114,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   button: {
-    backgroundColor: '#0782F9',
+    backgroundColor: '#FF9700',
     width: '100%',
     padding: 15,
     borderRadius: 10,
@@ -127,7 +124,7 @@ const styles = StyleSheet.create({
   buttonOutline: {
     backgroundColor: 'white',
     marginTop: 5,
-    borderColor: '#0782F9',
+    borderColor: '#FF9700',
     borderWidth: 2,
   },
   buttonText: {
@@ -136,7 +133,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   buttonOutlineText: {
-    color: '#0782F9',
+    color: '#FF9700',
     fontWeight: '700',
     fontSize: 16,
   },
