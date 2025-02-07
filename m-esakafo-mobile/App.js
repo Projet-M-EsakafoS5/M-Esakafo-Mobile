@@ -11,7 +11,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
 
 // // Création du stack de navigation
-// const Stack = createNativeStackNavigator();
+  const Stack = createNativeStackNavigator();
 
 // // 🔹 Fonction pour s'inscrire aux notifications et obtenir un token FCM
 // async function registerForPushNotificationsAsync() {
@@ -43,30 +43,30 @@ import { StyleSheet } from 'react-native';
 // }
 
 export default function App() {
-  useEffect(() => {
-    // 🔹 Inscription aux notifications au démarrage
-    registerForPushNotificationsAsync();
+  // useEffect(() => {
+  //   // 🔹 Inscription aux notifications au démarrage
+  //   registerForPushNotificationsAsync();
 
-    // 🔹 Écouteur pour afficher les notifications reçues
-    messaging.onMessage(async remoteMessage => {
-      console.log("Notification reçue en premier plan:", remoteMessage);
-      Alert.alert(remoteMessage.notification.title, remoteMessage.notification.body);
-    });
+  //   // 🔹 Écouteur pour afficher les notifications reçues
+  //   messaging.onMessage(async remoteMessage => {
+  //     console.log("Notification reçue en premier plan:", remoteMessage);
+  //     Alert.alert(remoteMessage.notification.title, remoteMessage.notification.body);
+  //   });
 
-    // 🔹 Écouteur pour les notifications lorsque l'application est en arrière-plan ou terminée
-    messaging.onNotificationOpenedApp(remoteMessage => {
-      console.log("Notification ouverte en arrière-plan:", remoteMessage);
-    });
+  //   // 🔹 Écouteur pour les notifications lorsque l'application est en arrière-plan ou terminée
+  //   messaging.onNotificationOpenedApp(remoteMessage => {
+  //     console.log("Notification ouverte en arrière-plan:", remoteMessage);
+  //   });
 
-    // 🔹 Si l'application est fermée et ouverte via une notification
-    messaging.getInitialNotification()
-      .then(remoteMessage => {
-        if (remoteMessage) {
-          console.log("Notification ouverte au démarrage:", remoteMessage);
-        }
-      });
+  //   // 🔹 Si l'application est fermée et ouverte via une notification
+  //   messaging.getInitialNotification()
+  //     .then(remoteMessage => {
+  //       if (remoteMessage) {
+  //         console.log("Notification ouverte au démarrage:", remoteMessage);
+  //       }
+  //     });
 
-  }, []);
+  // }, []);
 
   return (
     <NavigationContainer>
