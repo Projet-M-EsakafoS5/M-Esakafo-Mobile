@@ -12,6 +12,7 @@ const LoginScreen = ({ navigation }) => {
 
   const handleLogin = async () => {
     try {
+      //Liaison avec Firebase
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       console.log('Logged in with:', user.email);
