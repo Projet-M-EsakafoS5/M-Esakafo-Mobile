@@ -20,7 +20,6 @@ api.interceptors.request.use(request => {
     return Promise.reject(error);
 });
 
-// Interceptors pour les réponses
 api.interceptors.response.use(response => {
     console.log('Réponse reçue :', response);
     return response;
@@ -29,7 +28,6 @@ api.interceptors.response.use(response => {
     return Promise.reject(error);
 });
 
-// Fonction utilitaire pour attendre
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 // Fonction pour réessayer une requête
