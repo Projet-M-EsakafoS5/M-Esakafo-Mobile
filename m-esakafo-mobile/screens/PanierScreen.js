@@ -76,7 +76,7 @@ const PanierScreen = ({ route }) => {
       <TouchableOpacity 
         style={styles.commandeButton} 
         onPress={handlePasserCommande}
-        disabled={loading} // Désactiver le bouton pendant le chargement
+        disabled={loading} 
       >
         <Text style={styles.buttonText}>{loading ? 'En cours...' : 'Passer la commande'}</Text>
       </TouchableOpacity>
