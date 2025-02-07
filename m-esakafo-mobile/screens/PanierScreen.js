@@ -7,12 +7,12 @@ import { createCommande } from '../services/api';
 const PanierScreen = ({ route }) => {
   const navigation = useNavigation();
   const [panier, setPanier] = useState(route.params?.panier || []);
-  const [loading, setLoading] = useState(false); // État pour gérer le chargement
+  const [loading, setLoading] = useState(false); 
 
   // Fonction pour récupérer l'ID de l'utilisateur connecté
   const getUserId = () => {
     const user = getAuth().currentUser;
-    return user ? user.uid : null;  // Retourner l'ID si l'utilisateur est connecté, sinon null
+    return user ? user.uid : null;  
   };
 
   const handlePasserCommande = async () => {
@@ -22,8 +22,8 @@ const PanierScreen = ({ route }) => {
     }
 
     try {
-      setLoading(true); // Afficher le chargement pendant l'appel API
-      const userId = getUserId();  // Récupérer l'ID de l'utilisateur connecté
+      setLoading(true); 
+      const userId = getUserId();  
       console.log(userId);
       if (!userId) {
         Alert.alert('Erreur', 'Vous devez être connecté pour passer une commande');
