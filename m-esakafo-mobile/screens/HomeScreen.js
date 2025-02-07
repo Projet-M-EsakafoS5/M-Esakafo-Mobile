@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { getAuth } from 'firebase/auth';  
 import {
   View,
   Text,
@@ -11,7 +12,7 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
-import { fetchPlats } from '../services/api';
+import { fetchPlats, createCommande } from '../services/api';  
 
 const imageMapping = {
   "spaghetti.jpg": require("../img/spaghetti.jpg"),
@@ -26,7 +27,18 @@ const HomeScreen = ({ navigation }) => {
   const [quantite, setQuantite] = useState('1');
   const [modalVisible, setModalVisible] = useState(false);
   const [panier, setPanier] = useState([]);
+  const [loading, setLoading] = useState(false);
 
+  const getUserName = () => {
+    const user = getAuth().currentUser;
+  
+    if (!user || !user.email) {
+      return null; 
+    }
+  
+    return user.email.split("@")[0]; 
+  };
+  
   useEffect(() => {
     loadPlats();
   }, []);
@@ -36,7 +48,7 @@ const HomeScreen = ({ navigation }) => {
       const data = await fetchPlats();
       setPlats(Array.isArray(data) ? data : []);
     } catch (error) {
-      console.error('Error loading plats:', error);
+      console.error('Erreur de chargement des plats:', error);
       setPlats([]);
     }
   };
@@ -70,7 +82,8 @@ const HomeScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Image source={require("../img/logo.png")} style={styles.logo} />
-      <Text style={styles.header}>Nos Plats</Text>
+      <Text style={styles.nomUser}>Bonjour , {getUserName()} </Text>
+      <Text style={styles.header}>Voici nos Plats</Text>
 
       <FlatList
         data={plats}
@@ -92,7 +105,7 @@ const HomeScreen = ({ navigation }) => {
         style={styles.panierButton}
         onPress={() => navigation.navigate('Panier', { panier })}
       >
-        <Text style={styles.buttonText}>Voir Panier ({panier.length})</Text>
+        <Text style={styles.buttonText}>Voir Panier</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.panierButtonDeco}
@@ -140,6 +153,13 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 24,
+    fontWeight: 'bold',
+    color: '#300E66',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  nomUser: {
+    fontSize: 30,
     fontWeight: 'bold',
     color: '#300E66',
     textAlign: 'center',
