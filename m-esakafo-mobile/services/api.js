@@ -62,7 +62,7 @@ export const fetchPlats = async () => {
                         return plats;
                     }
                 } catch (parseError) {
-                    console.error('Erreur parsing JSON:', parseError);
+                    console.error('Erreur JSON:', parseError);
                 }
             }
         } else if (Array.isArray(response.data)) {
