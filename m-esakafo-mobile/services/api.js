@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://m-esakafo-1.onrender.com'
+const API_URL = 'http://192.168.88.14:8000'
 
 // Configuration axios
 const api = axios.create({
@@ -100,13 +100,6 @@ export const createCommande = async (userId, plats, numeroTicket, quantite) => {
         });
 
         const results = await Promise.all(promises);
-
-        // Vérifier si toutes les commandes ont réussi
-        const failedCommands = results.filter(r => !r.data.success);
-        if (failedCommands.length > 0) {
-            throw new Error('Certaines commandes ont échoué: ' + 
-                failedCommands.map(r => r.data.error).join(', '));
-        }
 
         return {
             success: true,
