@@ -1,7 +1,7 @@
 import axios from 'axios';
 import superagent from 'superagent';
 
-const API_URL = 'https://m-esakafo-1.onrender.com';
+const API_URL = 'https://m-esakafo-1.onrender.com'
 
 // Configuration axios
 const api = axios.create({
@@ -49,27 +49,12 @@ export const fetchPlats = async () => {
         console.log('Fetching plats...');
         const response = await api.get('/api/plats');
         
-        if (typeof response.data === 'string') {
-            const startIndex = response.data.lastIndexOf('[{');
-            const endIndex = response.data.lastIndexOf('}]') + 2;
-            
-            if (startIndex !== -1 && endIndex !== -1) {
-                const jsonStr = response.data.substring(startIndex, endIndex);
-                try {
-                    const plats = JSON.parse(jsonStr);
-                    if (Array.isArray(plats)) {
-                        console.log(`${plats.length} plats récupérés correctement`);
-                        return plats;
-                    }
-                } catch (parseError) {
-                    console.error('Erreur JSON:', parseError);
-                }
-            }
-        } else if (Array.isArray(response.data)) {
-            console.log(`${response.data.length} plats récupérés`);
-            return response.data;
+        // Vérifiez si la réponse contient des données sous la clé "data"
+        if (response.data && Array.isArray(response.data.data)) {
+            console.log(`${response.data.data.length} plats récupérés`);
+            return response.data.data;
         }
-        
+
         console.error('Format de réponse invalide:', response.data);
         return [];
     } catch (error) {
