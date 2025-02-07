@@ -43,7 +43,7 @@ const retryRequest = async (fn, retries = 3, interval = 5000) => {
     }
 };
 
-// Récupération des plats
+// Récupération des plats au /api/plats
 export const fetchPlats = async () => {
     try {
         console.log('Fetching plats...');
