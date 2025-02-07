@@ -12,6 +12,7 @@ const RegisterScreen = ({ navigation }) => {
 
   const handleRegister = async () => {
     if (password !== confirmPassword) {
+      //Si erreur envoyer un code erreur
       setError('Les mots de passe ne correspondent pas');
       return;
     }
