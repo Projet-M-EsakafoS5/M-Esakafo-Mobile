@@ -14,22 +14,36 @@ const PanierScreen = ({ route }) => {
     return user ? user.uid : null;  
   };
 
+  const viderlepanier= () => {
+    setPanier([]); 
+  }; 
+
   const handlePasserCommande = async () => {
     if (panier.length === 0) {
       Alert.alert('Erreur', 'Votre panier est vide');
       return;
     }
 
+    // Vérifier que tous les plats dans le panier sont valides
+    const platsValides = panier.filter(plat => plat.id && plat.quantite > 0);
+
+    if (platsValides.length === 0) {
+      Alert.alert('Erreur', 'Tous les plats sont invalides');
+      return;
+    }
+
     try {
-      setLoading(true); 
-      const userId = getUserId();  
+      setLoading(true);
+      const userId = getUserId();
       if (!userId) {
         Alert.alert('Erreur', 'Vous devez être connecté pour passer une commande');
         return;
       }
 
-      const numeroTicket = `T-${Math.floor(Math.random() * 1000)}`;  
-      for (let plat of panier) {
+      const numeroTicket = `T-${Math.floor(Math.random() * 1000)}`;
+      const panierFinal = platsValides;
+
+      for (let plat of panierFinal) {
         const response = await createCommande(userId, [plat], numeroTicket, plat.quantite);
 
         if (!response.success) {
@@ -38,38 +52,36 @@ const PanierScreen = ({ route }) => {
       }
 
       Alert.alert('Succès', `Commande enregistrée avec le numéro : ${numeroTicket}`);
-      setPanier([]);
+      setPanier([]);  
       navigation.goBack();
     } catch (error) {
       Alert.alert('Erreur', 'Une erreur est survenue lors de la commande');
     } finally {
       setLoading(false);
     }
-  };
+};
 
+  
   const augmenterQuantite = (index) => {
-    setPanier((prevPanier) => 
-      prevPanier.map((plat, i) => 
-        i === index ? { ...plat, quantite: plat.quantite + 1 } : plat
-      )
+    const panierFinal = panier.map((plat, i) =>
+      i === index ? { ...plat, quantite: plat.quantite + 1 } : plat
     );
+    setPanier(panierFinal); 
   };
   
   const diminuerQuantite = (index) => {
-    setPanier((prevPanier) =>
-      prevPanier
-        .map((plat, i) => 
-          i === index ? { ...plat, quantite: plat.quantite - 1 } : plat
-        )
-        .filter((plat) => plat.quantite > 0)
-    );
+    const panierFinal = panier
+      .map((plat, i) => (i === index ? { ...plat, quantite: plat.quantite - 1 } : plat))
+      .filter((plat) => plat.quantite > 0);
+    setPanier(panierFinal);
   };
   
-
   const supprimerPlat = (index) => {
-    const newPanier = panier.filter((_, i) => i !== index);
-    setPanier(newPanier);
+    const panierFinal = panier.filter((_, i) => i !== index); 
+    setPanier(panierFinal);
   };
+  
+  
 
   const renderItem = ({ item, index }) => (
     <View style={styles.itemContainer}>
@@ -98,6 +110,14 @@ const PanierScreen = ({ route }) => {
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
       />
+
+      <TouchableOpacity 
+        style={styles.commandeButton} 
+        onPress={viderlepanier}
+      >
+        <Text style={styles.buttonText}>Vider le panier</Text>
+      </TouchableOpacity>
+
       <TouchableOpacity 
         style={styles.commandeButton} 
         onPress={handlePasserCommande}
