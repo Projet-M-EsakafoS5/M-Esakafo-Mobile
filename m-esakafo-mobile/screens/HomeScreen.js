@@ -16,7 +16,7 @@ import { fetchPlats } from '../services/api';
 const imageMapping = {
   "spaghetti.jpg": require("../img/spaghetti.jpg"),
   "soupe.jpg": require("../img/soupe.jpg"),
-  "frite.jpg": require("../img/frite.jpg"),
+  "riz.jpg": require("../img/riz.jpg"),
   "steak.jpg": require("../img/steak.jpg"),
 };
 

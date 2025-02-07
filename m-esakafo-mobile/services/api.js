@@ -1,12 +1,11 @@
 import axios from 'axios';
-import superagent from 'superagent';
 
 const API_URL = 'https://m-esakafo-1.onrender.com'
 
 // Configuration axios
 const api = axios.create({
     baseURL: API_URL,
-    timeout: 10000, // Délai d'attente de 10 secondes
+    timeout: 10000, 
     headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
@@ -21,7 +20,7 @@ api.interceptors.request.use(request => {
 });
 
 api.interceptors.response.use(response => {
-    console.log('Réponse reçue :', response);
+    // console.log('Réponse reçue :', response);
     return response;
 }, error => {
     console.error('Erreur de réponse :', error.response ? error.response.data : error.message);
@@ -92,7 +91,7 @@ export const createCommande = async (userId, plats, numeroTicket, quantite) => {
 
             console.log('Envoi de la commande au serveur:', commandeData);
 
-            return api.post('/api/commandes', commandeData, {
+            return api.post('/api/commandes/create', commandeData, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
@@ -101,7 +100,6 @@ export const createCommande = async (userId, plats, numeroTicket, quantite) => {
         });
 
         const results = await Promise.all(promises);
-        console.log('Réponses reçues:', results);
 
         // Vérifier si toutes les commandes ont réussi
         const failedCommands = results.filter(r => !r.data.success);
