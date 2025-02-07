@@ -1,8 +1,7 @@
 import axios from 'axios';
 import superagent from 'superagent';
 
-// ADRESSE SYMFONY DEPLOYE EN LIGNE
-const API_URL = 'http://192.168.88.14:8000';
+const API_URL = 'https://m-esakafo-1.onrender.com';
 
 // Configuration de base d'axios
 const api = axios.create({
