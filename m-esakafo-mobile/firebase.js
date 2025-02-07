@@ -2,6 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import messaging from '@react-native-firebase/messaging';
 
+
 const firebaseConfig = {
   apiKey: "AIzaSyApxACHC_7yMd7QfVbmTUUDzmsSCrHdxXI",
   authDomain: "m-esakafo.firebaseapp.com",
@@ -13,4 +14,4 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-export { messaging };  // Export correct de Firebase Messaging pour React Native
+export { messaging }; 
