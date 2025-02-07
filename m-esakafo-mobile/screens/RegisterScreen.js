@@ -20,7 +20,7 @@ const RegisterScreen = ({ navigation }) => {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       console.log('Registered with:', user.email);
-      // Navigation vers la page de connexion après inscription réussie
+      // Navigation vers la page de connexion si inscription réussie
       navigation.replace('Login');
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
