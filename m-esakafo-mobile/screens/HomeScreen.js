@@ -75,7 +75,7 @@ const HomeScreen = ({ navigation }) => {
         renderItem={({ item }) => (
           <TouchableOpacity style={styles.platItem} onPress={() => handlePlatPress(item)}>
             <Image 
-              source={imageMapping[item.sprite] || { uri: item.sprite }} // Vérification d'image locale ou distante
+              source={imageMapping[item.sprite] || { uri: item.sprite }} 
               style={styles.platImage} 
             />
             <Text style={styles.platNom}>{item.nom}</Text>
