@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  View, 
-  Text, 
-  FlatList, 
-  Image, 
-  StyleSheet, 
+import {
+  View,
+  Text,
+  FlatList,
+  Image,
+  StyleSheet,
   SafeAreaView,
   TouchableOpacity,
   Modal,
   TextInput,
-  Alert
+  Alert,
 } from 'react-native';
 import { fetchPlats } from '../services/api';
 
 const imageMapping = {
   "spaghetti.jpg": require("../img/spaghetti.jpg"),
-  "brochette.jpg": require("../img/brochette.jpg"),
+  "soupe.jpg": require("../img/soupe.jpg"),
   "frite.jpg": require("../img/frite.jpg"),
   "steak.jpg": require("../img/steak.jpg"),
 };
@@ -55,7 +55,7 @@ const HomeScreen = ({ navigation }) => {
 
     const itemExiste = panier.find(item => item.id === selectedPlat.id);
     if (itemExiste) {
-      setPanier(panier.map(item => 
+      setPanier(panier.map(item =>
         item.id === selectedPlat.id ? { ...item, quantite: item.quantite + qte } : item
       ));
     } else {
@@ -69,26 +69,36 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Image source={require("../img/logo.png")} style={styles.logo} />
       <Text style={styles.header}>Nos Plats</Text>
+
       <FlatList
         data={plats}
         renderItem={({ item }) => (
           <TouchableOpacity style={styles.platItem} onPress={() => handlePlatPress(item)}>
-            <Image 
-              source={imageMapping[item.sprite] || { uri: item.sprite }} 
-              style={styles.platImage} 
+            <Image
+              source={imageMapping[item.sprite] || { uri: item.sprite }}
+              style={styles.platImage}
             />
             <Text style={styles.platNom}>{item.nom}</Text>
             <Text style={styles.platPrix}>{item.prix} Ar</Text>
           </TouchableOpacity>
         )}
         keyExtractor={item => item.id.toString()}
+        numColumns={2}
       />
-      <TouchableOpacity 
-        style={styles.panierButton} 
+
+      <TouchableOpacity
+        style={styles.panierButton}
         onPress={() => navigation.navigate('Panier', { panier })}
       >
         <Text style={styles.buttonText}>Voir Panier ({panier.length})</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.panierButtonDeco}
+        onPress={() => navigation.navigate('Login')}
+      >
+        <Text style={styles.buttonText}>Log out</Text>
       </TouchableOpacity>
 
       <Modal
@@ -117,19 +127,107 @@ const HomeScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
-  header: { fontSize: 24, fontWeight: 'bold', textAlign: 'center', margin: 20 },
-  platItem: { padding: 15, margin: 10, backgroundColor: '#eee', borderRadius: 10, alignItems: 'center' },
-  platImage: { width: 100, height: 100, borderRadius: 10, marginBottom: 10 },
-  platNom: { fontSize: 18, fontWeight: 'bold' },
-  platPrix: { fontSize: 16, color: '#2ecc71' },
-  panierButton: { backgroundColor: '#00C851', padding: 15, borderRadius: 8, margin: 20 },
-  buttonText: { color: 'white', textAlign: 'center', fontSize: 16 },
-  modalContainer: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' },
-  modalContent: { backgroundColor: 'white', padding: 20, borderRadius: 12, width: '80%' },
-  modalTitle: { fontSize: 20, fontWeight: 'bold', marginBottom: 10, textAlign: 'center' },
-  input: { borderWidth: 1, borderColor: '#ddd', borderRadius: 8, padding: 10, marginBottom: 20 },
-  confirmButton: { backgroundColor: '#00C851', padding: 15, borderRadius: 8 },
+  container: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    paddingTop: 20,
+  },
+  logo: {
+    width: 150,
+    height: 150,
+    marginBottom: 10,
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#300E66',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  platItem: {
+    backgroundColor: '#300E66',
+    borderRadius: 10,
+    padding: 10,
+    margin: 10,
+    alignItems: 'center',
+    width: 150,
+  },
+  platImage: {
+    width: 120,
+    height: 120,
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  platNom: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    textAlign: 'center',
+  },
+  platPrix: {
+    fontSize: 14,
+    color: '#FF9700',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  panierButton: {
+    backgroundColor: '#FF9700',
+    padding: 15,
+    borderRadius: 8,
+    margin: 20,
+    width: 200,
+    alignItems: 'center',
+  },
+  panierButtonDeco: {
+    backgroundColor: '#300E66',
+    padding: 15,
+    borderRadius: 8,
+    margin: 20,
+    width: 200,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 12,
+    width: '80%',
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#300E66',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    padding: 10,
+    marginBottom: 20,
+    width: '100%',
+    textAlign: 'center',
+  },
+  confirmButton: {
+    backgroundColor: '#300E66',
+    padding: 15,
+    borderRadius: 8,
+    width: '100%',
+    alignItems: 'center',
+  },
 });
 
 export default HomeScreen;

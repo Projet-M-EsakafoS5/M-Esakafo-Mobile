@@ -90,11 +90,12 @@ export default function App() {
         <Stack.Screen 
           name="Home" 
           component={HomeScreen} 
-          options={{
-            headerShown: true,
-            title: 'M-Esakafo',
-            headerTitleAlign: 'center',
-          }}
+          options={{ headerShown: false }}
+          // options={{
+          //   headerShown: true,
+          //   title: 'M-Esakafo',
+          //   headerTitleAlign: 'center',
+          // }}
         />
         <Stack.Screen 
           name="Panier" 
