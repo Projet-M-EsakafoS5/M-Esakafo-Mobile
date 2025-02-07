@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, KeyboardAvoidingVi
 import { auth } from '../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
+
+//Page d'insrciption
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
