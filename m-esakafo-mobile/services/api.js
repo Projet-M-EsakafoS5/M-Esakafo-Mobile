@@ -13,9 +13,7 @@ const api = axios.create({
     }
 });
 
-// Interceptors pour les requêtes
 api.interceptors.request.use(request => {
-    // console.log('Début de la requête :', request);
     return request;
 }, error => {
     console.error('Erreur de requête :', error);
