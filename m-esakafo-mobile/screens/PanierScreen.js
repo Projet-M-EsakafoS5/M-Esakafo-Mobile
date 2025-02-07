@@ -31,11 +31,10 @@ const PanierScreen = ({ route }) => {
       }
 
       // Générer un ticket pour la commande random
-      const numeroTicket = `T-${Math.floor(Math.random() * 1000)}`;  // Exemple de génération de ticket
+      const numeroTicket = `T-${Math.floor(Math.random() * 1000)}`;  
 
-      // Passer chaque plat un par un dans le panier
       for (let plat of panier) {
-        const quantite = plat.quantite; // Quantité du plat à commander
+        const quantite = plat.quantite; 
 
         // Appeler l'API pour chaque plat
         const response = await createCommande(userId, [plat], numeroTicket, quantite);
