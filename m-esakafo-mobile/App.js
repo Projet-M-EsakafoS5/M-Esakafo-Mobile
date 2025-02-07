@@ -100,7 +100,7 @@ export default function App() {
         <Stack.Screen 
           name="Panier" 
           component={PanierScreen}
-          options={{ title: 'Ma Commande' }}
+          options={{ title: '' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
