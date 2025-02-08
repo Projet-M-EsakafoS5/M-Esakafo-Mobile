@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getAuth } from 'firebase/auth';  
+import { getFirestore, collection, query, where, onSnapshot } from 'firebase/firestore';
 import {
   View,
   Text,
@@ -13,12 +14,11 @@ import {
   Alert,
 } from 'react-native';
 import { fetchPlats, createCommande } from '../services/api';  
-
 const imageMapping = {
-  "spaghetti.jpg": require("../img/spaghetti.jpg"),
-  "soupe.jpg": require("../img/soupe.jpg"),
-  "riz.jpg": require("../img/riz.jpg"),
-  "steak.jpg": require("../img/steak.jpg"),
+  "spaghetti.png": require("../img/spaghetti.png"),
+  "soupe.png": require("../img/soupe.png"),
+  "riz.png": require("../img/riz.png"),
+  "steak.png": require("../img/steak.png"),
 };
 
 const HomeScreen = ({ navigation }) => {
@@ -38,6 +38,29 @@ const HomeScreen = ({ navigation }) => {
   
     return user.email.split("@")[0]; 
   };
+
+  //Listener Notification depusi Firestore 
+  useEffect(() => {
+    const user = getAuth().currentUser;
+    if (!user) return;
+
+    const db = getFirestore();
+    const notificationsRef = collection(db, 'notifications');
+    const q = query(notificationsRef, where('userId', '==', user.uid));
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const newNotifications = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setNotifications(newNotifications);
+      if (newNotifications.length > 0) {
+        Alert.alert('Nouvelle notification', 'Vous avez une nouvelle commande.');
+      }
+    });
+
+    return () => unsubscribe(); // Nettoyage du listener lors du démontage du composant
+  }, []);
   
   useEffect(() => {
     loadPlats();
@@ -73,7 +96,6 @@ const HomeScreen = ({ navigation }) => {
     } else {
       setPanier([...panier, { ...selectedPlat, quantite: qte }]);
     }
-
     setModalVisible(false);
     setQuantite('1');
     Alert.alert('Succès', 'Article ajouté au panier');
