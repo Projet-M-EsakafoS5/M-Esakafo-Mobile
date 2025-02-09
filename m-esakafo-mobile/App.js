@@ -9,6 +9,7 @@ import HomeScreen from './screens/HomeScreen';
 import PanierScreen from './screens/PanierScreen';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
+import NotifScreen from './screens/NotifScreen';
 
 // // Création du stack de navigation
   const Stack = createNativeStackNavigator();
@@ -31,6 +32,11 @@ export default function App() {
         <Stack.Screen 
           name="Register" 
           component={RegisterScreen} 
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="Notification" 
+          component={NotifScreen} 
           options={{ headerShown: false }}
         />
         <Stack.Screen 
