@@ -40,27 +40,27 @@ const HomeScreen = ({ navigation }) => {
   };
 
   //Listener Notification depusi Firestore 
-  useEffect(() => {
-    const user = getAuth().currentUser;
-    if (!user) return;
+  // useEffect(() => {
+  //   const user = getAuth().currentUser;
+  //   if (!user) return;
 
-    const db = getFirestore();
-    const notificationsRef = collection(db, 'notifications');
-    const q = query(notificationsRef, where('userId', '==', user.uid));
+  //   const db = getFirestore();
+  //   const notificationsRef = collection(db, 'notifications');
+  //   const q = query(notificationsRef, where('userId', '==', user.uid));
 
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const newNotifications = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setNotifications(newNotifications);
-      if (newNotifications.length > 0) {
-        Alert.alert('Nouvelle notification', 'Vous avez une nouvelle commande.');
-      }
-    });
+  //   const unsubscribe = onSnapshot(q, (snapshot) => {
+  //     const newNotifications = snapshot.docs.map(doc => ({
+  //       id: doc.id,
+  //       ...doc.data()
+  //     }));
+  //     setNotifications(newNotifications);
+  //     if (newNotifications.length > 0) {
+  //       Alert.alert('Nouvelle notification', 'Vous avez une nouvelle commande.');
+  //     }
+  //   });
 
-    return () => unsubscribe(); // Nettoyage du listener lors du démontage du composant
-  }, []);
+  //   return () => unsubscribe(); // Nettoyage du listener lors du démontage du composant
+  // }, []);
   
   useEffect(() => {
     loadPlats();
@@ -103,7 +103,11 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Image source={require("../img/logo.png")} style={styles.logo} />
+
+      <TouchableOpacity onPress={() => navigation.navigate('Notification')}>
+        <Image source={require("../img/logo.png")} style={styles.logo} />
+      </TouchableOpacity>
+
       <Text style={styles.nomUser}>Bonjour , {getUserName()} </Text>
       <Text style={styles.header}>Voici nos Plats</Text>
 
@@ -169,8 +173,8 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   logo: {
-    width: 150,
-    height: 150,
+    width: 120,
+    height: 110,
     marginBottom: 10,
   },
   header: {
