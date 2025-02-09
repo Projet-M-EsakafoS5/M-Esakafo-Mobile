@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://192.168.1.110:8000'
+const API_URL = 'https://m-esakafo-1.onrender.com'
 
 // Configuration axios
 const api = axios.create({
@@ -116,5 +116,26 @@ export const createCommande = async (userId, plats, numeroTicket, quantite) => {
             error.message || 
             'Erreur lors de la création de la commande'
         );
+    }
+};
+export const fetchCommandesTerminees = async (userId) => {
+    try {
+        if (!userId) {
+            throw new Error("UserId est requis");
+        }
+
+        console.log(`Récupération des commandes terminées pour l'utilisateur ID: ${userId}`);
+        const response = await api.get(`/api/commandes/check-user-orders/${userId}`);
+
+        if (response.data && Array.isArray(response.data)) {
+            console.log(`${response.data.length} commandes terminées récupérées`);
+            return response.data;
+        }
+
+        console.error('Format de réponse invalide:', response.data);
+        return [];
+    } catch (error) {
+        console.error("Erreur lors de la récupération des commandes terminées:", error);
+        return [];
     }
 };
